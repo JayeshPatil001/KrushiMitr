@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Harvest</title>
+  <style>
+    :root {
+      --primary: #a5d6a7;
+      --secondary: #ffffff;
+      --dark-bg: #f6fff6;
+      --card-bg: #ffffff;
+      --btn-gradient-start: #c8e6c9;
+      --btn-gradient-end: #f1f8e9;
+    }
+
+    body {
+      background-color: var(--dark-bg);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #2e7d32;
+      padding: 2rem;
+      min-height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .form-card {
+      background-color: var(--card-bg);
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 0.5rem rgba(129, 199, 132, 0.3);
+      width: 100%;
+      max-width: 450px;
+      border: 1px solid #c8e6c9;
+      transition: 0.3s ease;
+    }
+
+    .form-card:hover {
+      box-shadow: 0 0 1rem rgba(129, 199, 132, 0.6);
+      border-color: var(--primary);
+    }
+
+    .form-card h2 {
+      margin-bottom: 1rem;
+      text-align: center;
+      color: #388e3c;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    .error {
+      color: red;
+      font-size: 0.9rem;
+      margin-top: 0.2rem;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+    }
+
+    input, select {
+      padding: 0.5rem;
+      border: 1px solid #c8e6c9;
+      border-radius: 0.5rem;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      transition: 0.3s ease;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #81c784;
+      box-shadow: 0 0 5px rgba(129, 199, 132, 0.5);
+    }
+
+    .btn {
+      background: linear-gradient(to right, var(--btn-gradient-start), var(--btn-gradient-end));
+      color: #2e7d32;
+      padding: 0.6rem 1.2rem;
+      font-weight: bold;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background: linear-gradient(to right, var(--btn-gradient-end), var(--btn-gradient-start));
+    }
+
+    .back-link {
+      margin-top: 1rem;
+      text-align: center;
+    }
+
+    .back-link a {
+      color: #2e7d32;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .back-link a:hover {
+      color: #1b5e20;
+    }
+  </style>
+</head>
+<body>
+    <h1 style="text-align: center; color: #2e7d32; font-size: 2.5rem; margin-bottom: 1.5rem;">कृषिमित्र</h1>
+
+  <div class="container">
+    <div class="form-card">
+      <h2>Add Harvest</h2>
+      <form method="POST" action="{% url 'harvest' %}">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <label for="id_crop">Crop</label>
+        {{ form.crop }}
+
+        <label for="id_date_of_harvest">Date of Harvest</label>
+        {{ form.date_of_harvest }}
+        <div class="error">{{ form.date_of_harvest.errors }}</div>
+
+        <label for="id_buyer">Buyer</label>
+        {{ form.buyer }}
+         <div class="error">{{ form.buyer.errors }}</div>
+
+        <label for="id_rate_per_unit">Rate Per Unit</label>
+        {{ form.rate_per_unit }}
+         <div class="error">{{ form.rate_per_unit.errors }}</div>
+
+        <label for="id_quantity">Quantity</label>
+        {{ form.quantity }}
+         <div class="error">{{ form.quantity.errors }}</div>
+
+        <button type="submit" class="btn">Save Harvest</button>
+      </form>
+      <div class="back-link">
+        <a href="{% url 'home' %}"> Back to Home</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

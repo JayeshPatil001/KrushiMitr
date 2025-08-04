@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Expense History</title>
+  <style>
+    :root {
+      --btn-gradient-start: #c8e6c9;
+      --btn-gradient-end: #f1f8e9;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f0fff4;
+      color: #2e7d32;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 2.5rem;
+    }
+
+    h2 {
+      text-align: center;
+      margin-top: 10px;
+      margin-bottom: 30px;
+    }
+
+    form {
+      background: white;
+      max-width: 500px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 12px;
+      border: 2px solid #c8e6c9;
+      box-shadow: 0 0 10px rgba(0, 128, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    select, input[type="text"], input[type="date"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 2px solid #a5d6a7;
+      border-radius: 8px;
+      box-sizing: border-box;
+      background-color: #f9fffa;
+    }
+
+    button[type="submit"] {
+      margin-top: 25px;
+      padding: 12px 25px;
+      background-color: #81c784;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #66bb6a;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px; 
+      margin-top: 30px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.6rem 1.2rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 0.5rem;
+      background: linear-gradient(to right, var(--btn-gradient-start), var(--btn-gradient-end));
+      color: #2e7d32;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background: linear-gradient(to right, var(--btn-gradient-end), var(--btn-gradient-start));
+    }
+  </style>
+</head>
+<body>
+
+  <h1></h1>
+  <h2>Expense History</h2>
+
+  <form method="GET" action="{% url 'expense_history' %}">
+    <label>Filter by:</label>
+    <select name="filter_type" id="expense_filter" onchange="toggleExpenseFilter()">
+      <option value="">Select</option>
+      <option value="crop">Crop</option>
+      <option value="date">Date</option>
+    </select>
+
+    <div id="crop_filter" style="display:none;">
+      <label>Crop:</label>
+      <input type="text" name="crop_name" placeholder="Enter crop name">
+    </div>
+
+    <div id="date_filter" style="display:none;">
+      <label>Date:</label>
+      <input type="date" name="date">
+    </div>
+
+    <button type="submit">Search</button>
+  </form>
+
+  <div class="button-container">
+    <a href="{% url 'home' %}" class="btn">Back to Home</a>
+  </div>
+
+  <script>
+    function toggleExpenseFilter() {
+      const filter = document.getElementById("expense_filter").value;
+      document.getElementById("crop_filter").style.display = (filter === "crop") ? "block" : "none";
+      document.getElementById("date_filter").style.display = (filter === "date") ? "block" : "none";
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>History</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f6fff5;
+      font-family: 'Segoe UI', sans-serif;
+      color: #2e7d32;
+    }
+
+    h1, h2 {
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 30px;
+      font-size: 3rem;
+      color: #2e7d32;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-top: 10px;
+      margin-bottom: 40px;
+    }
+
+    .history-container {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 30px;
+    }
+
+    .card {
+      background: white;
+      border: 2px solid #c8e6c9;
+      border-radius: 12px;
+      padding: 30px;
+      width: 250px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0, 128, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 15px rgba(76, 175, 80, 0.3);
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #a5d6a7;
+      color: #1b5e20;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #81c784;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>कृषिमित्र</h1>
+  <h2>View History</h2>
+
+  <div class="history-container">
+    <div class="card">
+      <h3>Harvest History</h3>
+      <p>Check records of all your harvests.</p>
+      <a href="{% url 'harvest_history' %}" class="btn">View Harvest</a>
+    </div>
+    <div class="card">
+      <h3>Expense History</h3>
+      <p>Track all farming expenses here.</p>
+      <a href="{% url 'expense_history' %}" class="btn">View Expenses</a>
+    </div>
+  </div>
+
+</body>
+</html>

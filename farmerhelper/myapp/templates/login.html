@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farmer Portal - Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    :root {
+      --primary: #00796b;
+    }
+
+    body {
+      background: linear-gradient(to right, #e0f7fa, #ffffff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 420px;
+      animation: slideIn 1s ease-in-out;
+      position: relative;
+      z-index: 1;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: var(--primary);
+    }
+
+    .form-box {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 20px;
+      align-items: center;
+    }
+
+    label {
+      font-weight: 500;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus,
+    input[type="email"]:focus {
+      border-color: var(--primary);
+    }
+
+    .btn {
+      padding: 12px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s;
+      width: 60%;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      background-color: #004d40;
+    }
+
+    .helper-text {
+      font-size: 0.9rem;
+      color: #666;
+      text-align: center;
+    }
+
+    .link-box {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .link-box a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .link-box a:hover {
+      color: #004d40;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Floating particles */
+.particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: var(--primary);
+  border-radius: 50%;
+  opacity: 0.2;
+  animation: float 18s infinite linear;
+}
+
+@keyframes float {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 0.7; }
+  90% { opacity: 0.7; }
+  100% { transform: translateY(-100vh) translateX(40px); opacity: 0; }
+}
+
+
+
+  </style>
+</head>
+<body>
+  <div class="particles">
+    <div class="particle" style="top: 10%; left: 20%;"></div>
+    <div class="particle" style="top: 40%; left: 60%;"></div>
+    <div class="particle" style="top: 80%; left: 30%;"></div>
+    <div class="particle" style="top: 70%; left: 90%;"></div>
+    <div class="particle" style="top: 20%; left: 75%;"></div>
+  </div>
+
+  <div class="container">
+    <h2>Farmer Portal Login</h2>
+    <p class="helper-text">Enter your username and password to access your dashboard.</p>
+    <div class="form-box">
+      <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div style="display: flex; justify-content: center; width: 100%;">
+      <button class="btn" type="submit">Login</button>
+      </div>
+      </form>
+      
+    </div>
+    <div class="link-box">
+       <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+    </div>
+  </div>
+</body>
+</html>
