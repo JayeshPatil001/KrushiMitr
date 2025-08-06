@@ -14,4 +14,8 @@ urlpatterns = [
     path('history/',views.history,name='history'),
     path('harvest_history/',views.harvest_history,name='harvest_history'),
     path('expense_history/',views.expense_history,name='expense_history'),
+    path('delete_harvest/<int:id>/',views.delete_harvest,name='delete_harvest'),
+    path('delete_expense/<int:id>/',views.delete_expense,name='delete_expense'),
+    path('weather',views.weather,name='weather'),
+
 ]

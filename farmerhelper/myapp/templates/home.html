@@ -6,10 +6,10 @@
   <title>Farmer Dashboard</title>
   <style>
     :root {
-      --primary: #a5d6a7; /* Lighter Green */
-      --secondary: #ffffff; /* White */
-      --dark-bg: #f6fff6; /* Softer Light Green Background */
-      --card-bg: #ffffff; /* White Cards */
+      --primary: #0cd912;
+      --secondary: #ffffff; 
+      --dark-bg: #f6fff6; 
+      --card-bg: #ffffff; 
       --btn-gradient-start: #c8e6c9;
       --btn-gradient-end: #f1f8e9;
     }
@@ -129,6 +129,10 @@
       gap: 1.5rem;
     }
 
+    .loss {
+  color: red;
+}
+
     .particles {
       position: fixed;
       top: 0;
@@ -141,19 +145,15 @@
 
     .particle {
       position: absolute;
-      width: 3px;
-      height: 3px;
+      width: 4px;
+      height: 4px;
       background-color: var(--primary);
       border-radius: 50%;
       opacity: 0.2;
       animation: float 20s infinite linear;
     }
 
-    .loss {
-  color: red;
-}
-
-
+  
     @keyframes float {
       0% { transform: translateY(0) translateX(0); opacity: 0; }
       10% { opacity: 0.8; }
@@ -164,10 +164,18 @@
 </head>
 <body>
   <div class="particles">
-    <div class="particle" style="top: 20%; left: 10%;"></div>
-    <div class="particle" style="top: 60%; left: 40%;"></div>
-    <div class="particle" style="top: 80%; left: 70%;"></div>
-  </div>
+  <div class="particle" style="top: 10%; left: 5%;"></div>
+  <div class="particle" style="top: 20%; left: 20%;"></div>
+  <div class="particle" style="top: 30%; left: 35%;"></div>
+  <div class="particle" style="top: 40%; left: 50%;"></div>
+  <div class="particle" style="top: 50%; left: 65%;"></div>
+  <div class="particle" style="top: 60%; left: 80%;"></div>
+  <div class="particle" style="top: 70%; left: 25%;"></div>
+  <div class="particle" style="top: 80%; left: 45%;"></div>
+  <div class="particle" style="top: 90%; left: 70%;"></div>
+  <div class="particle" style="top: 95%; left: 90%;"></div>
+</div>
+
 
   <div class="navbar">
     <h1 style="text-align: center; color: #2e7d32; font-size: 2.5rem; margin-bottom: 1.5rem;"> कृषिमित्र</h1>
@@ -178,7 +186,7 @@
       <a href="{% url 'crop' %}">Crops</a>
       <a href="{% url 'harvest' %}">Harvests</a>
       <a href="{% url 'expense' %}">Expenses</a>
-      <a href="#">Weather</a>
+      <a href="{% url 'weather' %}">Weather</a>
       <a href="{%url 'history' %}">History</a>
     </nav>
   </div>
@@ -207,12 +215,7 @@
     </div>
   </div>
 
-  <div class="centered">
-    <div class="card" style="width: 300px; text-align: center;">
-      <h2>☁️ Today's Weather</h2>
-      <p>Cloudy with a chance of rain</p>
-    </div>
-  </div>
+ 
 
  <div class="centered">
   <div class="card" style="width: 300px; text-align: center;">

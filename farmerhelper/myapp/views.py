@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm,UserCreationForm
 from django.contrib.auth import login,logout
 from .models import Crop,Expense,Harvest
@@ -144,7 +144,7 @@ def history(request):
 def harvest_history(request):
     user = request.user
     harvests = Harvest.objects.filter(user=user)  
-
+    
     if request.method == 'GET' and 'filter_type' in request.GET:
         filter_type = request.GET.get('filter_type')
 
@@ -152,19 +152,22 @@ def harvest_history(request):
             crop_name = request.GET.get('crop_name')
             if crop_name:
                 finalresult = harvests.filter(crop__name__icontains=crop_name)
-                return render(request,'harvest_result.html',{'harvest':harvests})
+                return render(request,'harvest_result.html',{
+                'harvests': finalresult,})
 
         elif filter_type == 'buyer':
             buyer = request.GET.get('buyer_name')
             if buyer:
                 finalresult = harvests.filter(buyer__icontains=buyer)
-                return render(request,'harvest_result.html',{'harvest':harvests})
+                return render(request,'harvest_result.html',{
+                'harvests': finalresult})
 
         elif filter_type == 'date':
             date = request.GET.get('harvest_date')
             if date:
                 finalresult = harvests.filter(date_of_harvest=date)
-                return render(request,'harvest_result.html',{'harvest':finalresult})
+                return render(request,'harvest_result.html',{
+                'harvests': finalresult,})
 
     return render(request, 'harvest_history.html')
 
@@ -190,5 +193,23 @@ def expense_history(request):
                 return render(request, 'expense_result.html', {'expenses': finalresult})
 
     return render(request, 'expense_history.html')
+
+from django.shortcuts import get_object_or_404, redirect
+from .models import Harvest
+
+def delete_harvest(request, id):
+    ele = get_object_or_404(Harvest, id=id, user=request.user)
+    ele.delete()
+    return redirect('harvest_history')
+
+
+def delete_expense(request,id):
+    ele=get_object_or_404(Expense,id=id,user=request.user)
+    ele.delete()
+    return redirect('expense_history')
+
+def weather(request):
+    return render(request,'weather.html')
+
 
 

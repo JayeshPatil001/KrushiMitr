@@ -6,15 +6,13 @@
   <style>
 
     :root {
-       --btn-gradient-start: #c8e6c9;
+      --primary: #0cd912;
+      --secondary: #ffffff;
+      --dark-bg: #f6fff6;
+      --card-bg: #ffffff;
+      --btn-gradient-start: #c8e6c9;
       --btn-gradient-end: #f1f8e9;
     }
-
-
-
-
-
-
 
     body {
       margin: 0;
@@ -119,52 +117,129 @@
   transition: background 0.3s ease;
 }
 
+.button-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
 .btn:hover {
   background: linear-gradient(to right, var(--btn-gradient-end), var(--btn-gradient-start));
 }
 
+.delbtn {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.5rem;
+  background: linear-gradient(to right, var(--btn-gradient-start), var(--btn-gradient-end));
+  color: #2e7d32;
+  text-decoration: none;
+  transition: background 0.3s ease;
+  text-align: center;
+}
+
+.delbtn:hover {
+  background: linear-gradient(to right, var(--btn-gradient-end), var(--btn-gradient-start));
+}
+
+
+.delete-btn {
+  background: linear-gradient(to right, #ffcdd2, #ef9a9a);
+  color: #b71c1c;
+}
+
+.delete-btn:hover {
+  background: linear-gradient(to right, #ef9a9a, #ffcdd2);
+}
+
+
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background-color: var(--primary);
+      border-radius: 50%;
+      opacity: 0.2;
+      animation: float 20s infinite linear;
+    }
+
+  
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0); opacity: 0; }
+      10% { opacity: 0.8; }
+      90% { opacity: 0.8; }
+      100% { transform: translateY(-100vh) translateX(30px); opacity: 0; }
+    }
 
 
   </style>
 </head>
 <body>
 
+  <div class="particles">
+  <div class="particle" style="top: 10%; left: 5%;"></div>
+  <div class="particle" style="top: 20%; left: 20%;"></div>
+  <div class="particle" style="top: 30%; left: 35%;"></div>
+  <div class="particle" style="top: 40%; left: 50%;"></div>
+  <div class="particle" style="top: 50%; left: 65%;"></div>
+  <div class="particle" style="top: 60%; left: 80%;"></div>
+  <div class="particle" style="top: 70%; left: 25%;"></div>
+  <div class="particle" style="top: 80%; left: 45%;"></div>
+  <div class="particle" style="top: 90%; left: 70%;"></div>
+  <div class="particle" style="top: 95%; left: 90%;"></div>
+</div>
+
   <h1 class="project-title">कृषिमित्र</h1>
   <h2>Harvest History</h2>
 
-  <div class="result-container">
-    {% if harvest %}
-      <div class="header-row">
-        <span>Crop</span>
-        <span>Date</span>
-        <span>Buyer</span>
-        <span>Rate/Unit</span>
-        <span>Quantity</span>
-        <span>Total</span>
+  <div class="result-container"> 
+  {% if harvests %}
+    <div class="header-row">
+      <span>Crop</span>
+      <span>Date</span>
+      <span>Buyer</span>
+      <span>Rate/Unit</span>
+      <span>Quantity</span>
+      <span>Total</span>
+      <span>Action</span>
+     
+    </div>
+
+    {% for h in harvests %}
+      <div class="harvest-entry">
+        <span>{{ h.crop.name }}</span>
+        <span>{{ h.date_of_harvest }}</span>
+        <span>{{ h.buyer }}</span>
+        <span>₹{{ h.rate_per_unit }}</span>
+        <span>{{ h.quantity }}</span>
+        <span>₹{{ h.total_amount }}</span>
+        <span>
+          <a href="{% url 'delete_harvest' h.id %}" class="delbtn delete-btn">Delete</a>
+        </span>
       </div>
-
-      {% for h in harvest %}
-        <div class="harvest-entry">
-          <span>{{ h.crop.name }}</span>
-          <span>{{ h.date_of_harvest }}</span>
-          <span>{{ h.buyer }}</span>
-          <span>₹{{ h.rate_per_unit }}</span>
-          <span>{{ h.quantity }}</span>
-          <span>₹{{ h.total_amount }}</span>
-        </div>
-      {% endfor %}
-    {% else %}
-      <p class="no-data">No harvest entries found.</p>
-    {% endif %}
-  </div>
-
-<div class="button-container">
-  <a href="{% url 'harvest_history' %}" class="btn">Previous Page</a>
-  <a href="{% url 'home' %}" class="btn">Back to Home</a>
+    {% endfor %}
+  {% else %}
+    <p class="no-data">No harvest entries found.</p>
+  {% endif %}
 </div>
 
-
-
+<div class="button-container">
+    <a href="{% url 'harvest_history' %}" class="btn">Previous Page</a>
+    <a href="{% url 'home' %}" class="btn">Back to Home</a>
+  </div>
 
 </body>
 </html>

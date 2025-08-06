@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🌦 Weather Info</title>
+  <style>
+    :root {
+      --primary: #0cd912;
+      --secondary: #ffffff;
+      --dark-bg: #f6fff6;
+      --card-bg: #ffffff;
+      --btn-gradient-start: #c8e6c9;
+      --btn-gradient-end: #f1f8e9;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 2rem;
+      background: #f0f4f7;
+      position: relative;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2e7d32;
+    }
+
+    .weather-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 2rem;
+    }
+
+    #locationInput {
+      padding: 0.6rem;
+      font-size: 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #ccc;
+      width: 250px;
+    }
+
+    .get-weather-btn {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  background: linear-gradient(to right, var(--btn-gradient-start), var(--btn-gradient-end));
+  color: var(--primary);
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 200px; 
+  text-align: center;
+}
+
+
+    .get-weather-btn:hover {
+      background: linear-gradient(to right, var(--btn-gradient-end), var(--btn-gradient-start));
+    }
+
+    .weather-card {
+      display: none;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      width: 60%;
+      background: #fff;
+      border-radius: 1rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      color: #333;
+    }
+
+    .weather-card h2 {
+      color: #2e7d32;
+      margin-bottom: 1rem;
+    }
+
+    .error {
+      color: red;
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .home-btn {
+      display: block;
+      margin: 2rem auto 1rem;
+      text-align: center;
+      text-decoration: none;
+      padding: 0.6rem 1.2rem;
+      background: linear-gradient(to right, var(--btn-gradient-start), var(--btn-gradient-end));
+      color: var(--primary);
+      border-radius: 0.5rem;
+      font-weight: bold;
+      width: fit-content;
+    }
+
+    .home-btn:hover {
+      background: linear-gradient(to right, var(--btn-gradient-end), var(--btn-gradient-start));
+    }
+
+  
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .particle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background-color: var(--primary);
+      border-radius: 50%;
+      opacity: 0.2;
+      animation: float 20s infinite linear;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) translateX(0); opacity: 0; }
+      10% { opacity: 0.8; }
+      90% { opacity: 0.8; }
+      100% { transform: translateY(-100vh) translateX(30px); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+    <div class="particles">
+  <div class="particle" style="top: 10%; left: 5%;"></div>
+  <div class="particle" style="top: 20%; left: 20%;"></div>
+  <div class="particle" style="top: 30%; left: 35%;"></div>
+  <div class="particle" style="top: 40%; left: 50%;"></div>
+  <div class="particle" style="top: 50%; left: 65%;"></div>
+  <div class="particle" style="top: 60%; left: 80%;"></div>
+  <div class="particle" style="top: 70%; left: 25%;"></div>
+  <div class="particle" style="top: 80%; left: 45%;"></div>
+  <div class="particle" style="top: 90%; left: 70%;"></div>
+  <div class="particle" style="top: 95%; left: 90%;"></div>
+</div>
+
+  <h1>Weather Information</h1>
+
+  <div class="weather-form">
+    <input type="text" id="locationInput" placeholder="Enter city name..." />
+    <button class="get-weather-btn" onclick="getWeather()">Get Weather</button>
+  </div>
+
+  <div id="weatherCard" class="weather-card">
+    <h2 id="cityName"></h2>
+    <p><strong>Temperature:</strong> <span id="temperature"></span> °C</p>
+    <p><strong>Humidity:</strong> <span id="humidity"></span>%</p>
+    <p><strong>Condition:</strong> <span id="condition"></span></p>
+  </div>
+
+  <a href="{% url 'home' %}" class="home-btn">Home</a>
+
+  <p id="errorMessage" class="error"></p>
+
+  <div class="particles" id="particles"></div>
+
+  <script>
+    function getWeather() {
+      const city = document.getElementById("locationInput").value.trim();
+      const card = document.getElementById("weatherCard");
+      const error = document.getElementById("errorMessage");
+      card.style.display = "none";
+      error.textContent = "";
+
+      if (!city) {
+        error.textContent = "Please enter a city name.";
+        return;
+      }
+
+      fetch(`https://wttr.in/${city}?format=j1`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Failed to fetch weather data.");
+          }
+          return response.json();
+        })
+        .then(data => {
+          const current = data.current_condition[0];
+          document.getElementById("cityName").textContent = city;
+          document.getElementById("temperature").textContent = current.temp_C;
+          document.getElementById("humidity").textContent = current.humidity;
+          document.getElementById("condition").textContent = current.weatherDesc[0].value;
+          card.style.display = "block";
+        })
+        .catch(err => {
+          error.textContent = "Error fetching weather data.";
+        });
+    }
+    
+  </script>
+
+</body>
+</html>
